@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman w/ JS</title>
+
+	<link href="assets/css/reset.css" rel="stylesheet">
+	<link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">  <!-- main container -->
+	  <div class="row">   <!-- first row -->
+		<div class=jumbotron>   <!-- jumbotron  -->
+			<h1>Hangman</h1>
+		</div>   <!-- jumbotron  -->
+	  </div>  <!-- first row  -->
+	  <div>   <!-- row to hold the two boxes -->
+	  	<div class="col-md-3" id="leftBox">
+	  		<img src="assets/images/hangman.jpg" height="100%" width="100%" alt="Artwork">
+	  	</div>
+	  	<div class="col-md-3" id="rightBox">   <!-- box on right ... row 2 -->
+	  		<p>Press any key to get started !</p>
+	  		<p><b>0&nbsp</b> Win(s)</p>
+	  		<p><b>Word being identified</b></p>
+	  		<p id="activeWord">Your guesses here</p>
+	  		<p><b>Number of GUESS(ES) remaining</b></p>
+	  		<p id="remainingGuesses">13</p>
+	  		<p>Letters already guessed</p>
+	  		<p id="lettersGuessed">_&nbsp_&nbsp_&nbsp_&nbsp_&nbsp_&nbsp_&nbsp</p>
+			<script>
+				var wordBank = ["oak", "pine", "maple", "fir", "pear", "apple", "persimmon", "pear"];
+				var wordToBeGuessed = wordBank[2];   //to be chosen at random
+				console.log("wordToBeGuessed = " + wordToBeGuessed);
+				var userGuesses = ["_ _"];
+				var userGuessInWord = ["_&nbsp&nbsp_&nbsp&nbsp_"];
+				var userGuessNotInWord = ["_"];
+				var remainingGuesses = 13;
+				document.onkeyup = function(event) {   //keep checking for "key up event"
+					var userInput = event.key; 
+					console.log("userInput = " + userInput);
+					if (remainingGuesses) {
+						letterPositionInWord = wordToBeGuessed.indexOf(userInput);
+						
+										// get position of letter in word, if applicable
+						if (letterPositionInWord != -1) {  // if letter guessed is part of word
+							console.log("User Presses part of word = " + userInput);
+							if (userGuessInWord.indexOf(userInput) == -1) {  // if letter has not been guessed already
+								remainingGuesses--;
+								console.log("User inputs new letter in word = " + userInput);
+								userGuessInWord.push(userInput); 			// store new letter in user guess
+								document.getElementById("activeWord").innerHTML = userGuessInWord;  // print new string 
+							}    // if letter in word but has not been guessed already
+						}    // if letter guessed is part of word to be guessed
+						else if (userGuesses.indexOf(userInput) == -1) {  // is this is a new guess, then store it
+							remainingGuesses--;
+							userGuesses.push(userInput);
+							console.log ("User's new incorrect guess = " + userInput);
+							document.getElementById("lettersGuessed").innerHTML = userGuesses;  // update display with all incorrect guesses of user
+						}   // incorrect new guess from user
+						// else if (wordToBeGuessed.indexOf(userInput) == -1) {    // correct new guess from user
+						// 	userGuessInWord.push(userInput);					// store correct new guess
+						// 	document.getElementById("activeWord").innerHTML = userGuessInWord;
+						// }
+
+						// if (userInput === "k" || userInput === "K") {  
+						// 	document.getElementById("lettersGuessed").innerHTML = wordBank[4];   // 
+						// }  
+						// else if (userInput === "s" || userInput === "S") {
+						// 	document.getElementById("lettersGuessed").innerHTML = wordBank[4];   // 
+						// }  
+						// else if (userInput === "s" || userInput === "S") {
+
+						// 	document.getElementById("activeWord").innerHTML = wordLettersGuessed;  // number of dashes to be equal to number of letters in word
+						// }  // if keypressed == s or k
+						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
+					}  // if remaining guesses not less than 0
+				}  // keep checking for keyup event
+			</script>
+
+	  	</div>
+	  </div>   <!-- box on right ... row 2 -->
+	</div>   <!-- main container -->
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+</body>
+</html>
