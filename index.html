@@ -30,15 +30,16 @@
 	  		<p>Letters already guessed</p>
 	  		<p id="lettersGuessed">_</p>
 			<script>
+				var numberOfWins = 0;
 				var wordBank = ["banana", "mango", "dates", "fig", "pear", "apple", "persimmon", "orange", "clementine", "grape", "kiwi"];
 				var wordToBeGuessed;  // being updated in function call
-				chooseWordToBeGuessed ();  // select the word to be guessed;
+				var remainingGuesses; // counter to keep track of guess number
 				var userGuesses = ["_"];          // 
-				var userGuessesPrint;             // string to store ongoing correct guesses from user
+				var userGuessesPrint = [""];     // string to store ongoing correct guesses from user
 				var userGuessInWord = [""];      // string to store correct user guesses from user
-				var userGuessInWordPrint;
+				var userGuessInWordPrint = [""];
 				var userGuessNotInWord = ["_"];   // string to store incorrect letter guesses from user
-				var remainingGuesses = wordToBeGuessed.length * 2;
+				chooseWordToBeGuessed ();  // select the word to be guessed;
 				document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 
 				document.onkeyup = function(event) {   //keep checking for "key up event"
@@ -67,7 +68,18 @@
 
 								// userGuessInWord.push(userInput); 			// store new letter in user guess
 								userGuessInWordPrint = userGuessInWord.join("");
-								document.getElementById("activeWord").innerHTML = userGuessInWordPrint;  // print new string 
+								document.getElementById("activeWord").innerHTML = userGuessInWordPrint;  // print new string
+
+								console.log("wordToBeGuessed = " + wordToBeGuessed);
+								console.log("userGuessInWordPrint = " + userGuessInWordPrint);
+								if (userGuessInWordPrint === wordToBeGuessed) {
+									numberOfWins ++;
+									document.getElementById("numberOfWins").innerHTML = numberOfWins + " Win(s)"; //update wins
+
+									remainingGuesses = 0;
+									chooseWordToBeGuessed ();  // select the word to be guessed & reset stats;
+								}
+
 							}    // if letter in word but has not been guessed already
 						}    // if letter guessed is part of word to be guessed
 						else if (userGuesses.indexOf(userInput) == -1) {  // is this is a new guess, then store it
@@ -76,6 +88,9 @@
 							userGuessesPrint = userGuesses.join(" ")
 							console.log ("User's new incorrect guess = " + userInput);
 							document.getElementById("lettersGuessed").innerHTML = userGuessesPrint;  // update display with all incorrect guesses of user
+							if (remainingGuesses == 0 ) {
+								chooseWordToBeGuessed();  // start a new word
+							}
 						}   // incorrect new guess from user
 						// else if (wordToBeGuessed.indexOf(userInput) == -1) {    // correct new guess from user
 						// 	userGuessInWord.push(userInput);					// store correct new guess
@@ -97,9 +112,15 @@
 				}  // keep checking for keyup event
 
 				function chooseWordToBeGuessed () {
+					userGuesses = [""];          // 
+					userGuessesPrint = [""];     // string to store ongoing correct guesses from user
+					userGuessInWord = [""];      // string to store correct user guesses from user
+					userGuessInWordPrint = [""];
+					userGuessNotInWord = [""];   // string to store incorrect letter guesses from user
 					var numberOfWords = wordBank.length;
 					var indexIntoWordBank = getRandomInt(0, numberOfWords);
 					wordToBeGuessed = wordBank[indexIntoWordBank];   //to be chosen at random
+					remainingGuesses = wordToBeGuessed.length * 2;
 					console.log ("indexIntoWordBank = " + indexIntoWordBank);
 					console.log("wordToBeGuessed = " + wordToBeGuessed);
 					var blankActive = [""];
@@ -108,6 +129,7 @@
 					}  // to display dashes for word to be guessed
 					blankActive = blankActive.join("&nbsp&nbsp");  // put spaces between dashes
 					document.getElementById("activeWord").innerHTML = blankActive;  // display dashes equal to number of letters in word to be guessed
+					document.getElementById("lettersGuessed").innerHTML = "_";  // 
 				}
 
 				function getRandomInt(min, max) {
