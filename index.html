@@ -23,6 +23,8 @@
 	  		<p>Guess a Fruit Tree name !</p>
 	  		<p>Press any key to get started !</p>
 	  		<p id="numberOfWins">&nbsp<b>0</b>&nbspWin(s)</p>
+	  		<br>
+	  		<p id="numberOfLosses">&nbsp<b>0</b>&nbspLoss(es)</p>
 	  		<p><b>Word being identified</b></p>
 	  		<p id="activeWord">_&nbsp_&nbsp_&nbsp_</p>
 	  		<p><b>Number of GUESS(ES) remaining</b></p>
@@ -31,6 +33,7 @@
 	  		<p id="lettersGuessed">_</p>
 			<script>
 				var numberOfWins = 0;
+				var numberOfLosses = 0;
 				var wordBank = ["banana", "mango", "dates", "fig", "pear", "apple", "persimmon", "orange", "clementine", "grape", "kiwi"];
 				var wordToBeGuessed;  // being updated in function call
 				var remainingGuesses; // counter to keep track of guess number
@@ -74,7 +77,7 @@
 								console.log("userGuessInWordPrint = " + userGuessInWordPrint);
 								if (userGuessInWordPrint === wordToBeGuessed) {
 									numberOfWins ++;
-									document.getElementById("numberOfWins").innerHTML = numberOfWins + " Win(s)"; //update wins
+									document.getElementById("numberOfWins").innerHTML =  "&nbsp<b>" + numberOfWins + "</b>&nbsp Win(s)"; //update wins
 
 									remainingGuesses = 0;
 									chooseWordToBeGuessed ();  // select the word to be guessed & reset stats;
@@ -89,24 +92,12 @@
 							console.log ("User's new incorrect guess = " + userInput);
 							document.getElementById("lettersGuessed").innerHTML = userGuessesPrint;  // update display with all incorrect guesses of user
 							if (remainingGuesses == 0 ) {
+								numberOfLosses++;
+								document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbsp Loss(es)";
 								chooseWordToBeGuessed();  // start a new word
 							}
 						}   // incorrect new guess from user
-						// else if (wordToBeGuessed.indexOf(userInput) == -1) {    // correct new guess from user
-						// 	userGuessInWord.push(userInput);					// store correct new guess
-						// 	document.getElementById("activeWord").innerHTML = userGuessInWord;
-						// }
-
-						// if (userInput === "k" || userInput === "K") {  
-						// 	document.getElementById("lettersGuessed").innerHTML = wordBank[4];   // 
-						// }  
-						// else if (userInput === "s" || userInput === "S") {
-						// 	document.getElementById("lettersGuessed").innerHTML = wordBank[4];   // 
-						// }  
-						// else if (userInput === "s" || userInput === "S") {
-
-						// 	document.getElementById("activeWord").innerHTML = wordLettersGuessed;  // number of dashes to be equal to number of letters in word
-						// }  // if keypressed == s or k
+						
 						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 					}  // if remaining guesses not less than 0
 				}  // keep checking for keyup event
