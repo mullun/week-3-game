@@ -26,41 +26,46 @@
 	  		<p><b>Word being identified</b></p>
 	  		<p id="activeWord">_&nbsp_&nbsp_&nbsp_</p>
 	  		<p><b>Number of GUESS(ES) remaining</b></p>
-	  		<p id="remainingGuesses">13</p>
+	  		<p id="remainingGuesses">13</p>  <!-- place holder value -->
 	  		<p>Letters already guessed</p>
 	  		<p id="lettersGuessed">_</p>
 			<script>
 				var wordBank = ["banana", "mango", "dates", "fig", "pear", "apple", "persimmon", "orange", "clementine", "grape", "kiwi"];
-				var numberOfWords = wordBank.length;
-				var indexIntoWordBank = getRandomInt(0, numberOfWords);
-				var wordToBeGuessed = wordBank[indexIntoWordBank];   //to be chosen at random
-				console.log ("indexIntoWordBank = " + indexIntoWordBank);
-				console.log("wordToBeGuessed = " + wordToBeGuessed);
-				var blankActive = [""];
-				for (i = 0; i < wordToBeGuessed.length; i++) {
-					blankActive.push("_ ");
-				}
-				blankActive = blankActive.join("  &nbsp&nbsp ");
-				document.getElementById("activeWord").innerHTML = blankActive;  // display dashes equal to number of letters in word to be guessed
-				var userGuesses = ["_"];
-				var userGuessesPrint;
-				var userGuessInWord = ["_"];
-				var userGuessNotInWord = ["_"];
-				var remainingGuesses = 13;
+				var wordToBeGuessed;  // being updated in function call
+				chooseWordToBeGuessed ();  // select the word to be guessed;
+				var userGuesses = ["_"];          // 
+				var userGuessesPrint;             // string to store ongoing correct guesses from user
+				var userGuessInWord = [""];      // string to store correct user guesses from user
 				var userGuessInWordPrint;
+				var userGuessNotInWord = ["_"];   // string to store incorrect letter guesses from user
+				var remainingGuesses = wordToBeGuessed.length * 2;
+				document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
+
 				document.onkeyup = function(event) {   //keep checking for "key up event"
-					var userInput = event.key; 
+					var userInput = event.key;  // key pressed is captured in userInput
 					console.log("userInput = " + userInput);
-					if (remainingGuesses) {
+
+					if (remainingGuesses) {   // as long as allowed guesses have not been exhausted ...
 						letterPositionInWord = wordToBeGuessed.indexOf(userInput);
 
 										// get position of letter in word, if applicable
 						if (letterPositionInWord != -1) {  // if letter guessed is part of word
 							console.log("User Presses part of word = " + userInput);
+
 							if (userGuessInWord.indexOf(userInput) == -1) {  // if letter has not been guessed already
 								remainingGuesses--;
 								console.log("User inputs new letter in word = " + userInput);
-								userGuessInWord.push(userInput); 			// store new letter in user guess
+
+								var lengthOfPuzzle = wordToBeGuessed.length;
+								console.log("lenght of word to be gussed = " + lengthOfPuzzle);
+
+								for (i = 0; i < lengthOfPuzzle; i++) {
+									if (wordToBeGuessed[i] === userInput) {
+										userGuessInWord[i] = userInput;
+									}
+								}
+
+								// userGuessInWord.push(userInput); 			// store new letter in user guess
 								userGuessInWordPrint = userGuessInWord.join("");
 								document.getElementById("activeWord").innerHTML = userGuessInWordPrint;  // print new string 
 							}    // if letter in word but has not been guessed already
@@ -90,6 +95,21 @@
 						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 					}  // if remaining guesses not less than 0
 				}  // keep checking for keyup event
+
+				function chooseWordToBeGuessed () {
+					var numberOfWords = wordBank.length;
+					var indexIntoWordBank = getRandomInt(0, numberOfWords);
+					wordToBeGuessed = wordBank[indexIntoWordBank];   //to be chosen at random
+					console.log ("indexIntoWordBank = " + indexIntoWordBank);
+					console.log("wordToBeGuessed = " + wordToBeGuessed);
+					var blankActive = [""];
+					for (i = 0; i < wordToBeGuessed.length; i++) {
+						blankActive.push("_");
+					}  // to display dashes for word to be guessed
+					blankActive = blankActive.join("&nbsp&nbsp");  // put spaces between dashes
+					document.getElementById("activeWord").innerHTML = blankActive;  // display dashes equal to number of letters in word to be guessed
+				}
+
 				function getRandomInt(min, max) {
 				// Returns a random integer between min (included) and max (excluded)
 				// Using Math.round() will give you a non-uniform distribution!
