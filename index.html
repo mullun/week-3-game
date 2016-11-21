@@ -131,12 +131,14 @@
 								numberOfLosses++;
 								document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbspLoss(es)";
 								chooseWordToBeGuessed();  // start a new word
+								document.getElementById("pastImage").src = "./assets/images/hangman.jpg";
 							}
 						}   // incorrect new guess from user
 						
 						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 						if (remainingGuesses == 0) {
 							chooseWordToBeGuessed();
+							document.getElementById("pastImage").src = "./assets/images/hangman.jpg";
 						};
 					}  // if remaining guesses not less than 0
 				}  // keep checking for keyup event
