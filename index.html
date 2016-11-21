@@ -17,7 +17,7 @@
 	  </div>  <!-- first row  -->
 	  <div>   <!-- row to hold the two boxes -->
 	  	<div class="col-md-3" id="leftBox">
-	  		<img src="assets/images/hangman.jpg" height="100%" width="100%" alt="Artwork">
+	  		<img id="pastImage" src="assets/images/hangman.jpg" height="100%" width="100%" alt="Artwork">
 	  	</div>
 	  	<div class="col-md-3" id="rightBox">   <!-- box on right ... row 2 -->
 	  		<p>Guess a Fruit Tree name !</p>
@@ -87,7 +87,36 @@
 									document.getElementById("numberOfWins").innerHTML =  "&nbsp<b>" + numberOfWins + "</b>&nbsp Win(s)"; //update wins
 
 									remainingGuesses = 0;
+									console.log("remainingGuesses = " + remainingGuesses);
+									console.log("word Just guessed = " + wordToBeGuessed);
+
+									if (wordToBeGuessed === "orange") {
+										document.getElementById("pastImage").src = "./assets/images/orange.jpg";
+									} else if (wordToBeGuessed === "apple") {
+										document.getElementById("pastImage").src = "./assets/images/apple.jpg";
+									} else if (wordToBeGuessed === "fig") {
+										document.getElementById("pastImage").src = "./assets/images/fig.jpg";
+									} else if (wordToBeGuessed === "grape") {
+										document.getElementById("pastImage").src = "./assets/images/grape.jpg";
+									} else if (wordToBeGuessed === "clementine") {
+										document.getElementById("pastImage").src = "./assets/images/clementine.jpg";
+									} else if (wordToBeGuessed === "dates") {
+										document.getElementById("pastImage").src = "./assets/images/dates.jpg";
+									} else if (wordToBeGuessed === "persimmon") {
+										document.getElementById("pastImage").src = "./assets/images/persimmon.jpg";
+									} else if (wordToBeGuessed === "banana") {
+										document.getElementById("pastImage").src = "./assets/images/banana.jpg";
+									} else if (wordToBeGuessed === "mango") {
+										document.getElementById("pastImage").src = "./assets/images/mango.jpg";
+									} else if (wordToBeGuessed === "pear") {
+										document.getElementById("pastImage").src = "./assets/images/pear.jpg";
+									} else if (wordToBeGuessed === "kiwi") {
+										document.getElementById("pastImage").src = "./assets/images/kiwi.jpg";
+									}
+
+
 									chooseWordToBeGuessed ();  // select the word to be guessed & reset stats;
+
 								}
 
 							}    // if letter in word but has not been guessed already
