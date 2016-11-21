@@ -35,6 +35,7 @@
 				var numberOfWins = 0;
 				var numberOfLosses = 0;
 				var wordBank = ["banana", "mango", "dates", "fig", "pear", "apple", "persimmon", "orange", "clementine", "grape", "kiwi"];
+				var blankActive = ["_"];
 				var wordToBeGuessed;  // being updated in function call
 				var remainingGuesses; // counter to keep track of guess number
 				var userGuesses = ["_"];          // 
@@ -54,27 +55,33 @@
 
 										// get position of letter in word, if applicable
 						if (letterPositionInWord != -1) {  // if letter guessed is part of word
-							console.log("User Presses part of word = " + userInput);
+							// console.log("User Presses part of word = " + userInput);
 
 							if (userGuessInWord.indexOf(userInput) == -1) {  // if letter has not been guessed already
 								remainingGuesses--;
-								console.log("User inputs new letter in word = " + userInput);
+								// console.log("User inputs new letter in word = " + userInput);
+								console.log("blankActive = " + blankActive);
 
 								var lengthOfPuzzle = wordToBeGuessed.length;
-								console.log("lenght of word to be gussed = " + lengthOfPuzzle);
+								// console.log("length of word to be gussed = " + lengthOfPuzzle);
 
 								for (i = 0; i < lengthOfPuzzle; i++) {
-									if (wordToBeGuessed[i] === userInput) {
+									if (userInput === wordToBeGuessed[i]) {
 										userGuessInWord[i] = userInput;
+										blankActive[i] = userInput;
 									}
 								}
+								console.log("userGuessInWord = " + userGuessInWord);
+								console.log("blankActive = " + blankActive);
 
 								// userGuessInWord.push(userInput); 			// store new letter in user guess
 								userGuessInWordPrint = userGuessInWord.join("");
-								document.getElementById("activeWord").innerHTML = userGuessInWordPrint;  // print new string
+								document.getElementById("activeWord").innerHTML = blankActive.join("&nbsp&nbsp");  // print new string
 
 								console.log("wordToBeGuessed = " + wordToBeGuessed);
 								console.log("userGuessInWordPrint = " + userGuessInWordPrint);
+
+
 								if (userGuessInWordPrint === wordToBeGuessed) {
 									numberOfWins ++;
 									document.getElementById("numberOfWins").innerHTML =  "&nbsp<b>" + numberOfWins + "</b>&nbsp Win(s)"; //update wins
@@ -93,7 +100,7 @@
 							document.getElementById("lettersGuessed").innerHTML = userGuessesPrint;  // update display with all incorrect guesses of user
 							if (remainingGuesses == 0 ) {
 								numberOfLosses++;
-								document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbsp Loss(es)";
+								document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbspLoss(es)";
 								chooseWordToBeGuessed();  // start a new word
 							}
 						}   // incorrect new guess from user
@@ -114,12 +121,12 @@
 					remainingGuesses = wordToBeGuessed.length * 2;
 					console.log ("indexIntoWordBank = " + indexIntoWordBank);
 					console.log("wordToBeGuessed = " + wordToBeGuessed);
-					var blankActive = [""];
-					for (i = 0; i < wordToBeGuessed.length; i++) {
+					blankActive = ["_"];
+					for (i = 0; i < wordToBeGuessed.length - 1; i++) {
 						blankActive.push("_");
 					}  // to display dashes for word to be guessed
-					blankActive = blankActive.join("&nbsp&nbsp");  // put spaces between dashes
-					document.getElementById("activeWord").innerHTML = blankActive;  // display dashes equal to number of letters in word to be guessed
+					// blankActive = blankActive.join("&nbsp&nbsp");  // put spaces between dashes
+					document.getElementById("activeWord").innerHTML = blankActive.join("&nbsp&nbsp");  // display dashes equal to number of letters in word to be guessed
 					document.getElementById("lettersGuessed").innerHTML = "_";  // 
 				}
 
