@@ -20,28 +20,40 @@
 	  		<img src="assets/images/hangman.jpg" height="100%" width="100%" alt="Artwork">
 	  	</div>
 	  	<div class="col-md-3" id="rightBox">   <!-- box on right ... row 2 -->
+	  		<p>Guess a Fruit Tree name !</p>
 	  		<p>Press any key to get started !</p>
-	  		<p><b>0&nbsp</b> Win(s)</p>
+	  		<p id="numberOfWins">&nbsp<b>0</b>&nbspWin(s)</p>
 	  		<p><b>Word being identified</b></p>
-	  		<p id="activeWord">Your guesses here</p>
+	  		<p id="activeWord">_&nbsp_&nbsp_&nbsp_</p>
 	  		<p><b>Number of GUESS(ES) remaining</b></p>
 	  		<p id="remainingGuesses">13</p>
 	  		<p>Letters already guessed</p>
-	  		<p id="lettersGuessed">_&nbsp_&nbsp_&nbsp_&nbsp_&nbsp_&nbsp_&nbsp</p>
+	  		<p id="lettersGuessed">_</p>
 			<script>
-				var wordBank = ["oak", "pine", "maple", "fir", "pear", "apple", "persimmon", "pear"];
-				var wordToBeGuessed = wordBank[2];   //to be chosen at random
+				var wordBank = ["banana", "mango", "dates", "fig", "pear", "apple", "persimmon", "orange", "clementine", "grape", "kiwi"];
+				var numberOfWords = wordBank.length;
+				var indexIntoWordBank = getRandomInt(0, numberOfWords);
+				var wordToBeGuessed = wordBank[indexIntoWordBank];   //to be chosen at random
+				console.log ("indexIntoWordBank = " + indexIntoWordBank);
 				console.log("wordToBeGuessed = " + wordToBeGuessed);
-				var userGuesses = ["_ _"];
-				var userGuessInWord = ["_&nbsp&nbsp_&nbsp&nbsp_"];
+				var blankActive = [""];
+				for (i = 0; i < wordToBeGuessed.length; i++) {
+					blankActive.push("_ ");
+				}
+				blankActive = blankActive.join("  &nbsp&nbsp ");
+				document.getElementById("activeWord").innerHTML = blankActive;  // display dashes equal to number of letters in word to be guessed
+				var userGuesses = ["_"];
+				var userGuessesPrint;
+				var userGuessInWord = ["_"];
 				var userGuessNotInWord = ["_"];
 				var remainingGuesses = 13;
+				var userGuessInWordPrint;
 				document.onkeyup = function(event) {   //keep checking for "key up event"
 					var userInput = event.key; 
 					console.log("userInput = " + userInput);
 					if (remainingGuesses) {
 						letterPositionInWord = wordToBeGuessed.indexOf(userInput);
-						
+
 										// get position of letter in word, if applicable
 						if (letterPositionInWord != -1) {  // if letter guessed is part of word
 							console.log("User Presses part of word = " + userInput);
@@ -49,14 +61,16 @@
 								remainingGuesses--;
 								console.log("User inputs new letter in word = " + userInput);
 								userGuessInWord.push(userInput); 			// store new letter in user guess
-								document.getElementById("activeWord").innerHTML = userGuessInWord;  // print new string 
+								userGuessInWordPrint = userGuessInWord.join("");
+								document.getElementById("activeWord").innerHTML = userGuessInWordPrint;  // print new string 
 							}    // if letter in word but has not been guessed already
 						}    // if letter guessed is part of word to be guessed
 						else if (userGuesses.indexOf(userInput) == -1) {  // is this is a new guess, then store it
 							remainingGuesses--;
 							userGuesses.push(userInput);
+							userGuessesPrint = userGuesses.join(" ")
 							console.log ("User's new incorrect guess = " + userInput);
-							document.getElementById("lettersGuessed").innerHTML = userGuesses;  // update display with all incorrect guesses of user
+							document.getElementById("lettersGuessed").innerHTML = userGuessesPrint;  // update display with all incorrect guesses of user
 						}   // incorrect new guess from user
 						// else if (wordToBeGuessed.indexOf(userInput) == -1) {    // correct new guess from user
 						// 	userGuessInWord.push(userInput);					// store correct new guess
@@ -76,6 +90,13 @@
 						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 					}  // if remaining guesses not less than 0
 				}  // keep checking for keyup event
+				function getRandomInt(min, max) {
+				// Returns a random integer between min (included) and max (excluded)
+				// Using Math.round() will give you a non-uniform distribution!
+				  min = Math.ceil(min);
+				  max = Math.floor(max);
+				  return Math.floor(Math.random() * (max - min)) + min;
+				}  // function getRandomInt
 			</script>
 
 	  	</div>
