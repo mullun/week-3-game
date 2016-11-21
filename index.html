@@ -135,6 +135,9 @@
 						}   // incorrect new guess from user
 						
 						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
+						if (remainingGuesses == 0) {
+							chooseWordToBeGuessed();
+						};
 					}  // if remaining guesses not less than 0
 				}  // keep checking for keyup event
 
