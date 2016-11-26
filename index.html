@@ -117,10 +117,12 @@
 
 									chooseWordToBeGuessed ();  // select the word to be guessed & reset stats;
 
-								}
+								}  // when user figures out the word correctly ... 
 
 							}    // if letter in word but has not been guessed already
+
 						}    // if letter guessed is part of word to be guessed
+						
 						else if (userGuesses.indexOf(userInput) == -1) {  // is this is a new guess, then store it
 							remainingGuesses--;
 							userGuesses.push(userInput);
