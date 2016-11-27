@@ -47,7 +47,8 @@
 				document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 
 				document.onkeyup = function(event) {   //keep checking for "key up event"
-					var userInput = event.key;  // key pressed is captured in userInput
+					var userInput = String.fromCharCode(event.keyCode).toLowerCase();
+					// var userInput = event.key;  // key pressed is captured in userInput
 					console.log("userInput = " + userInput);
 
 					if (remainingGuesses) {   // as long as allowed guesses have not been exhausted ...
@@ -139,6 +140,8 @@
 						
 						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
 						if (remainingGuesses == 0) {
+							numberOfLosses++;
+							document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbspLoss(es)";
 							chooseWordToBeGuessed();
 							document.getElementById("pastImage").src = "./assets/images/hangman.jpg";
 						};
